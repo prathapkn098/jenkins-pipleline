@@ -1,42 +1,30 @@
 pipeline {
-         agent any
-         stages {
-                 stage('Build') {
-                 steps {
-                     echo 'Hi, GeekFlare. Starting to build the App.'
-                 }
-                 }
-                 stage('Test') {
-                 steps {
-                    input('Do you want to proceed?')
-                 }
-                 }
-                 stage('Deploy') {
-                 parallel { 
-                            stage('Deploy start ') {
-                           steps {
-                                echo "Start the deploy .."
-                           } 
-                           }
-                            stage('Deploying now') {
-                            agent {
-                                    docker {
-                                            reuseNode true
-                                            image ‘nginx’
-                                           }
-                                    }
-                            
-                              steps {
-                                echo "Docker Created"
-                              }
-                           }
-                           }
-                           }
-                 stage('Prod') {
-                     steps {
-                                echo "App is Prod Ready"
-                              }
-                 
-              }
-}
+  agent any	
+  stages {
+
+    stage ('BUILD') {
+      steps {
+        echo "This is Build stage" 
+        sh ''' 
+		sleep 5
+	        exit 0 
+	   '''
+      }  
+    }  
+    
+    stage ('TEST') {
+      steps {
+        echo "This is Test stage" 
+        sh 'sleep 5; exit 1'
+      }  
+    }  
+    
+    stage ('DEPLOY') {
+      steps {
+        echo "This is Deploy stage" 
+        sh 'sleep 5'
+      }  
+    }  
+  } 
+
 }
